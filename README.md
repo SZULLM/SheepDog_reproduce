@@ -9,6 +9,12 @@ them into data folder and unzip them.
 # Table of Content
 
 1. [Overview](#overview)
+2. [Dataset Structure](#dataset-structure)
+3. [Example of the Files](#example-of-the-files)
+    1. [fake news](#fake-news)
+    2. [real news](#real-news)
+4. [LLM-Empowered News Reframing](#llm-empowered-news-reframing)
+5. [Reference](#reference)
 
 # Overview
 
@@ -43,7 +49,7 @@ It also proposes a style-agnostic fake news detector, which is robust against LL
     │   │       ├── veracity_attributions_reliable.txt
     │   │       └── veracity_attributions_unreliable.txt
     │   └── real
-    │       └── gossipcop-736743
+    │       └── gossipcop-841804
     │           ├── news content.json
     │           ├── reliable.txt
     │           ├── style_attack.txt
@@ -56,10 +62,11 @@ It also proposes a style-agnostic fake news detector, which is robust against LL
         │   └── gossipcop-13736481
         │       └── news content.json
         └── real
-            └── gossipcop-736743
+            └── gossipcop-841804
                 └── news content.json
 
 13 directories, 18 files
+
 ```
 
 The **gossipcop** dataset contains 2 folders (source): fake and real. It contains 4717 fake news articles and 14991 real
