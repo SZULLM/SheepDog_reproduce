@@ -2,7 +2,9 @@
 
 This repository contains the **gossipcop** dataset and its extended dataset **gossipcop_SheepDog_chatglm_8k**.
 
-You can download the datasets from [Google Drive](https://drive.google.com/file/d/1a1gIVwLb-BvzomRHmFzXzGRLNHvbrEHY/view?usp=drive_link). Then put them into data folder and unzip them.
+You can download the datasets
+from [Google Drive](https://drive.google.com/file/d/1a1gIVwLb-BvzomRHmFzXzGRLNHvbrEHY/view?usp=drive_link). Then put
+them into data folder and unzip them.
 
 # Table of Content
 
@@ -10,12 +12,16 @@ You can download the datasets from [Google Drive](https://drive.google.com/file/
 
 # Overview
 
-The **gossipcop** dataset is from [FakeNewsNet](https://github.com/KaiDMML/FakeNewsNet?tab=readme-ov-files). 
+The **gossipcop** dataset is from [FakeNewsNet](https://github.com/KaiDMML/FakeNewsNet?tab=readme-ov-files).
 It is a subset of the original dataset, which only contains the news articles.
 
-The **gossipcop_SheepDog_chatglm_8k** dataset is an extended version of the subset of the **gossipcop** dataset, following the steps from the paper [Fake News in Sheep's Clothing: Robust Fake News Detection Against LLM-Empowered Style Attacks](https://arxiv.org/abs/2310.10830) (SheepDog).
+The **gossipcop_SheepDog_chatglm_8k** dataset is an extended version of the subset of the **gossipcop** dataset,
+following the steps from the
+paper [Fake News in Sheep's Clothing: Robust Fake News Detection Against LLM-Empowered Style Attacks](https://arxiv.org/abs/2310.10830) (
+SheepDog).
 
-**SheepDog** presents the style-related vulnerability of state-of-the-art text-based fake news detectors to LLM-empowered style attacks. 
+**SheepDog** presents the style-related vulnerability of state-of-the-art text-based fake news detectors to
+LLM-empowered style attacks.
 It also proposes a style-agnostic fake news detector, which is robust against LLM-empowered style attacks.
 
 # Dataset Structure
@@ -56,23 +62,33 @@ It also proposes a style-agnostic fake news detector, which is robust against LL
 13 directories, 18 files
 ```
 
-The **gossipcop** dataset contains 2 folders (source): fake and real. It contains 4717 fake news articles and 14991 real news articles.
+The **gossipcop** dataset contains 2 folders (source): fake and real. It contains 4717 fake news articles and 14991 real
+news articles.
 
-Each source folder contains multiple folders (news articles). The folder name is the news article id, such as `gossipcop-13736481`.
+Each source folder contains multiple folders (news articles). The folder name is the news article id, such
+as `gossipcop-13736481`.
 
-Each article folder contains a file named **news content.json**. It contains the information of the news articles from the corresponding news source, including url, text, images (if any), etc.
+Each article folder contains a file named **news content.json**. It contains the information of the news articles from
+the corresponding news source, including url, text, images (if any), etc.
 
-The **gossipcop_SheepDog_chatglm_8k** contains in total 8k news articles, 4k for each source, which are randomly selected from the **gossipcop** dataset. 
+The **gossipcop_SheepDog_chatglm_8k** contains in total 8k news articles, 4k for each source, which are randomly
+selected from the **gossipcop** dataset.
 
-Besides the **news content.json** file, each article folder contains 6 extra files: **style_attack.txt**, **reliable.txt**, **unreliable.txt**, **veracity_attributions.txt**, **veracity_attributions_reliable.txt**, **veracity_attributions_unreliable.txt**.
+Besides the **news content.json** file, each article folder contains 6 extra files: **style_attack.txt**, **reliable.txt
+**, **unreliable.txt**, **veracity_attributions.txt**, **veracity_attributions_reliable.txt**, *
+*veracity_attributions_unreliable.txt**.
 
-The news content.json file contains the original news text. Based on this text, using the LLM model, we generate the style attack text, reliable text, unreliable text. 
+The news content.json file contains the original news text. Based on this text, using the LLM model, we generate the
+style attack text, reliable text, unreliable text.
 
-We further use LLM model to generate the veracity attributions for the news articles. 
+We further use LLM model to generate the veracity attributions for the news articles.
 
-The veracity_attributions.txt file contains the veracity attributions for the original news articles. The veracity_attributions_reliable.txt and veracity_attributions_unreliable.txt files contain the veracity attributions for the reliable and unreliable text, respectively.
+The veracity_attributions.txt file contains the veracity attributions for the original news articles. The
+veracity_attributions_reliable.txt and veracity_attributions_unreliable.txt files contain the veracity attributions for
+the reliable and unreliable text, respectively.
 
-We utilize the [ChatGLM3](https://github.com/THUDM/ChatGLM3) model to reframe the news articles and predict the veracity attributions. More details can be found in below section [LLM-Empowered News Reframing](#llm-empowered-news-reframing).
+We utilize the [ChatGLM3](https://github.com/THUDM/ChatGLM3) model to reframe the news articles and predict the veracity
+attributions. More details can be found in below section [LLM-Empowered News Reframing](#llm-empowered-news-reframing).
 
 # Example of the Files
 
@@ -84,9 +100,9 @@ We utilize the [ChatGLM3](https://github.com/THUDM/ChatGLM3) model to reframe th
 
 ```json
 {
-  "url":"https://web.archive.org/web/20180312204214/https://www.cheatsheet.com/health-fitness/how-kylie-jenner-lost-weight-post-pregnancy.html/",
-  "text":"After nine months of fan speculation and hiding from the spotlight, Kylie Jenner finally revealed baby Stormi to the world. Like most celebrities, we expected Kylie to get back into shape quickly with a healthy diet and exercise. But recent photos reveal just how fast she dropped the pounds — and we’re all wondering if it’s healthy.\n\nSo, what’s Kylie’s weight-loss secret? Here’s how she managed to lose a reported 25 pounds in just two weeks.\n\n1. Kylie allegedly follows Kim K’s advice and eats super clean\n\nDuring her pregnancy, Kylie admitted to having an obsession with In-N-Out fast food, Insider notes. That’s a serious departure from the way she currently eats, however. And thanks to Kim Kardashian, Kylie is getting serious one-on-one advice on how to drop excess fat and get into shape fast post-pregnancy.\n\nThe Independent says one source added Kim advised Kylie to stick to a strict 1,500 calorie-a-day diet. Along with that, Kim suggests Kylie eats no carbs or sugar, even despite her “addiction” to fast food.\n\nNext: Kylie has been a fan of this dangerous weight-loss method for awhile.\n\n2. She may be a fan of ‘detox teas’\n\nOne source says in addition to a very strict diet, Kylie is drinking “detox teas” to help drop pounds, says HollywoodLife.com. This wouldn’t be Kylie’s first attempt at weight loss with these teas, either. She posted a photo of her holding two of her favorite detox formulas on Instagram and promoting their cleansing effects.\n\nHere’s the problem, though: Teas don’t actually have the ability to “detox” your body. And drinking them won’t automatically help you lose weight, either, though some do have a laxative effect. In this case, you’ll just lose water weight.\n\nNext: This is how Kylie prefers to train.\n\n3. When she works out, she’s sure to incorporate weight training\n\nThough sister Khloe has accused Kylie of not putting much work into her body in the past, those days are seemingly over for the young Jenner. HollywoodLife.com notes one insider reveals the new mom hits the gym for a mix of cardio and weight lifting. She’s reportedly a big fan of running, squats, and push-ups to get that pre-baby body back.\n\nThe insider also says Kylie works out with a personal trainer five days a week for up to three hours a day. If this is the case, she could be leading up to serious burnout in the future, which can hinder her results in the long run.\n\nNext: Could it be true that Kylie is sticking to a diet this low in calories?\n\n4. Kylie sticks to an extremely calorie-restricted diet, some sources say\n\nKim might advise a 1,500 calorie-a-day diet, but could Kylie be going to even bigger extreme? The Inquisitr says one insider mentions Kylie’s eating as little as 1,000 calories a day. They also said sometimes the starlet will just eat soup in the early evening as a meal replacement. And of course, this combined with no carbs or sugary sweets is sure to cause massive weight loss, even if it’s not sustainable.\n\nThe source says it gets even more severe than this, too. Allegedly, Kylie bans anyone from eating junk food around her so she’s not tempted.\n\nNext: Kylie might go overboard quickly with her regimen.\n\n5. Some say she wants to look even thinner than she did pre-pregnancy\n\nInStyle explains pre-pregnancy, Kylie was around 136 pounds, which is perfect for her 5-foot-6 frame. During her pregnancy, however, she gained upwards of 50 pounds. And now, the Inquisitr notes one source says she wants to be even thinner than she was before baby Stormi was ever in the picture.\n\nRush reports Kylie was right in the “normal” weight range at 136, so she shouldn’t aim to go too far under this number. We’ll have to see how extreme she goes with her regimen — though hopefully she’ll make healthy adjustments.\n\nNext: Some think this is the reason Kylie’s losing weight so quickly.\n\n6. Others say the weight is falling off naturally due to genetics\n\nIs it possible Kylie’s not really partaking in extreme dieting after all, and the weight is falling off due to good genes? That’s what one source tells HollywoodLife.com. They told the publication that “her biggest weight loss secret is breastfeeding and good genetics. She has always had a great metabolism and breastfeeding has kicked it into high gear.”\n\nCould it be true that the young Jenner isn’t going to any extremes after all? Maybe so. And for more drama, the source also mentions Kim’s jealous the pounds are coming off so easily for Kylie after her own personal struggles with baby weight.\n\nNext: Should Kylie lose weight this fast? Experts weigh in.\n\n7. Here’s what medical experts believe Kylie should be doing post-pregnancy\n\nDr. Elizabeth Ward tells WebMD all about weight gain and loss before and after pregnancy. Ward says a woman at an average weight should expect to gain between 25 and 35 pound, and they should also work to lose that excess weight after a year of having the baby. For at least six weeks postpartum, however, she suggests focusing on a healthy diet instead of cutting calories.\n\nWard also warns new mothers against following celebrity fad diets to lose weight quickly. Good nutrition, sleep, and physical activity are all vital for keeping energy levels up to take care of a newborn. And restricting calories if you’re a nursing mom will affect breast milk quality.\n\nCheck out The Cheat Sheet on Facebook!",
-  "images":[
+  "url": "https://web.archive.org/web/20180312204214/https://www.cheatsheet.com/health-fitness/how-kylie-jenner-lost-weight-post-pregnancy.html/",
+  "text": "After nine months of fan speculation and hiding from the spotlight, Kylie Jenner finally revealed baby Stormi to the world. Like most celebrities, we expected Kylie to get back into shape quickly with a healthy diet and exercise. But recent photos reveal just how fast she dropped the pounds — and we’re all wondering if it’s healthy.\n\nSo, what’s Kylie’s weight-loss secret? Here’s how she managed to lose a reported 25 pounds in just two weeks.\n\n1. Kylie allegedly follows Kim K’s advice and eats super clean\n\nDuring her pregnancy, Kylie admitted to having an obsession with In-N-Out fast food, Insider notes. That’s a serious departure from the way she currently eats, however. And thanks to Kim Kardashian, Kylie is getting serious one-on-one advice on how to drop excess fat and get into shape fast post-pregnancy.\n\nThe Independent says one source added Kim advised Kylie to stick to a strict 1,500 calorie-a-day diet. Along with that, Kim suggests Kylie eats no carbs or sugar, even despite her “addiction” to fast food.\n\nNext: Kylie has been a fan of this dangerous weight-loss method for awhile.\n\n2. She may be a fan of ‘detox teas’\n\nOne source says in addition to a very strict diet, Kylie is drinking “detox teas” to help drop pounds, says HollywoodLife.com. This wouldn’t be Kylie’s first attempt at weight loss with these teas, either. She posted a photo of her holding two of her favorite detox formulas on Instagram and promoting their cleansing effects.\n\nHere’s the problem, though: Teas don’t actually have the ability to “detox” your body. And drinking them won’t automatically help you lose weight, either, though some do have a laxative effect. In this case, you’ll just lose water weight.\n\nNext: This is how Kylie prefers to train.\n\n3. When she works out, she’s sure to incorporate weight training\n\nThough sister Khloe has accused Kylie of not putting much work into her body in the past, those days are seemingly over for the young Jenner. HollywoodLife.com notes one insider reveals the new mom hits the gym for a mix of cardio and weight lifting. She’s reportedly a big fan of running, squats, and push-ups to get that pre-baby body back.\n\nThe insider also says Kylie works out with a personal trainer five days a week for up to three hours a day. If this is the case, she could be leading up to serious burnout in the future, which can hinder her results in the long run.\n\nNext: Could it be true that Kylie is sticking to a diet this low in calories?\n\n4. Kylie sticks to an extremely calorie-restricted diet, some sources say\n\nKim might advise a 1,500 calorie-a-day diet, but could Kylie be going to even bigger extreme? The Inquisitr says one insider mentions Kylie’s eating as little as 1,000 calories a day. They also said sometimes the starlet will just eat soup in the early evening as a meal replacement. And of course, this combined with no carbs or sugary sweets is sure to cause massive weight loss, even if it’s not sustainable.\n\nThe source says it gets even more severe than this, too. Allegedly, Kylie bans anyone from eating junk food around her so she’s not tempted.\n\nNext: Kylie might go overboard quickly with her regimen.\n\n5. Some say she wants to look even thinner than she did pre-pregnancy\n\nInStyle explains pre-pregnancy, Kylie was around 136 pounds, which is perfect for her 5-foot-6 frame. During her pregnancy, however, she gained upwards of 50 pounds. And now, the Inquisitr notes one source says she wants to be even thinner than she was before baby Stormi was ever in the picture.\n\nRush reports Kylie was right in the “normal” weight range at 136, so she shouldn’t aim to go too far under this number. We’ll have to see how extreme she goes with her regimen — though hopefully she’ll make healthy adjustments.\n\nNext: Some think this is the reason Kylie’s losing weight so quickly.\n\n6. Others say the weight is falling off naturally due to genetics\n\nIs it possible Kylie’s not really partaking in extreme dieting after all, and the weight is falling off due to good genes? That’s what one source tells HollywoodLife.com. They told the publication that “her biggest weight loss secret is breastfeeding and good genetics. She has always had a great metabolism and breastfeeding has kicked it into high gear.”\n\nCould it be true that the young Jenner isn’t going to any extremes after all? Maybe so. And for more drama, the source also mentions Kim’s jealous the pounds are coming off so easily for Kylie after her own personal struggles with baby weight.\n\nNext: Should Kylie lose weight this fast? Experts weigh in.\n\n7. Here’s what medical experts believe Kylie should be doing post-pregnancy\n\nDr. Elizabeth Ward tells WebMD all about weight gain and loss before and after pregnancy. Ward says a woman at an average weight should expect to gain between 25 and 35 pound, and they should also work to lose that excess weight after a year of having the baby. For at least six weeks postpartum, however, she suggests focusing on a healthy diet instead of cutting calories.\n\nWard also warns new mothers against following celebrity fad diets to lose weight quickly. Good nutrition, sleep, and physical activity are all vital for keeping energy levels up to take care of a newborn. And restricting calories if you’re a nursing mom will affect breast milk quality.\n\nCheck out The Cheat Sheet on Facebook!",
+  "images": [
     "https://web.archive.org/web/20180312204214im_/https://www.cheatsheet.com/wp-content/uploads/2017/03/Two-cups-of-expresso-surrounded-by-coffee-beans-300x200.jpg?x90866",
     "https://web.archive.org/web/20180312204214im_/https://www.cheatsheet.com/wp-content/uploads/2017/10/kylie-jenner-prabal-gurung-333x500.jpg?x90866",
     "https://web.archive.org/web/20180312204214im_/https://www.cheatsheet.com/wp-content/uploads/2017/10/Prince-Charles-and-Princess-Diana-Wedding-Photo-300x200.png?x90866",
@@ -110,66 +126,66 @@ We utilize the [ChatGLM3](https://github.com/THUDM/ChatGLM3) model to reframe th
     "https://web.archive.org/web/20180312204214im_/https://www.cheatsheet.com/wp-content/uploads/2016/10/Insomnia-300x200.jpg?x90866",
     "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
   ],
-  "top_img":"https://web.archive.org/web/20180312204214im_/https://www.cheatsheet.com/wp-content/uploads/2018/02/Kim-Kylie-Chicago-nursery-640x360.png",
-  "keywords":[ ],
-  "authors":[
+  "top_img": "https://web.archive.org/web/20180312204214im_/https://www.cheatsheet.com/wp-content/uploads/2018/02/Kim-Kylie-Chicago-nursery-640x360.png",
+  "keywords": [],
+  "authors": [
     "Lauren Weiler"
   ],
-  "canonical_link":"https://web.archive.org/web/20180312204214/https://www.cheatsheet.com/health-fitness/how-kylie-jenner-lost-weight-post-pregnancy.html/?a=viewall",
-  "title":"Kylie Jenner Has Lost a Startling Amount of Weight Post-Pregnancy, and Here’s How",
-  "meta_data":{
-    "viewport":"width=device-width, initial-scale=1, user-scalable=yes",
-    "google-site-verification":"ktiOxQqv9Xlcn7qytDrsOVw_-MQ9S7bo2G5Iyfu-I9M",
-    "apple-mobile-web-app-capable":"yes",
-    "apple-mobile-web-app-title":"The Cheat Sheet",
-    "robots":"NOODP,NOYDIR",
-    "syndication-source":"https://www.cheatsheet.com/health-fitness/how-kylie-jenner-lost-weight-post-pregnancy.html/",
-    "p":{
-      "domain_verify":"936edf149ecbc3171d89b1f25f05e153"
+  "canonical_link": "https://web.archive.org/web/20180312204214/https://www.cheatsheet.com/health-fitness/how-kylie-jenner-lost-weight-post-pregnancy.html/?a=viewall",
+  "title": "Kylie Jenner Has Lost a Startling Amount of Weight Post-Pregnancy, and Here’s How",
+  "meta_data": {
+    "viewport": "width=device-width, initial-scale=1, user-scalable=yes",
+    "google-site-verification": "ktiOxQqv9Xlcn7qytDrsOVw_-MQ9S7bo2G5Iyfu-I9M",
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-title": "The Cheat Sheet",
+    "robots": "NOODP,NOYDIR",
+    "syndication-source": "https://www.cheatsheet.com/health-fitness/how-kylie-jenner-lost-weight-post-pregnancy.html/",
+    "p": {
+      "domain_verify": "936edf149ecbc3171d89b1f25f05e153"
     },
-    "description":"After Kylie Jenner had baby Stormi, fans freaked out about her sudden weight loss. Here's how she lost the weight so quickly.",
-    "og":{
-      "locale":"en_US",
-      "type":"article",
-      "title":"Kylie Jenner Has Lost a Startling Amount of Weight Post-Pregnancy, and Here's How",
-      "description":"After Kylie Jenner had baby Stormi, fans freaked out about her sudden weight loss. Here's how she lost the weight so quickly.",
-      "url":"https://web.archive.org/web/20180312204214/https://www.cheatsheet.com/health-fitness/how-kylie-jenner-lost-weight-post-pregnancy.html/?a=viewall",
-      "site_name":"The Cheat Sheet",
-      "image":{
-        "identifier":"https://web.archive.org/web/20180312204214im_/https://www.cheatsheet.com/wp-content/uploads/2017/03/Expecting-baby-640x426.jpg",
-        "secure_url":"https://www.cheatsheet.com/wp-content/uploads/2017/03/Expecting-baby-640x426.jpg"
+    "description": "After Kylie Jenner had baby Stormi, fans freaked out about her sudden weight loss. Here's how she lost the weight so quickly.",
+    "og": {
+      "locale": "en_US",
+      "type": "article",
+      "title": "Kylie Jenner Has Lost a Startling Amount of Weight Post-Pregnancy, and Here's How",
+      "description": "After Kylie Jenner had baby Stormi, fans freaked out about her sudden weight loss. Here's how she lost the weight so quickly.",
+      "url": "https://web.archive.org/web/20180312204214/https://www.cheatsheet.com/health-fitness/how-kylie-jenner-lost-weight-post-pregnancy.html/?a=viewall",
+      "site_name": "The Cheat Sheet",
+      "image": {
+        "identifier": "https://web.archive.org/web/20180312204214im_/https://www.cheatsheet.com/wp-content/uploads/2017/03/Expecting-baby-640x426.jpg",
+        "secure_url": "https://www.cheatsheet.com/wp-content/uploads/2017/03/Expecting-baby-640x426.jpg"
       }
     },
-    "article":{
-      "publisher":"https://www.facebook.com/wallstcheatsheet",
-      "tag":"pregnancy",
-      "section":"Health & Fitness",
-      "published_time":"2018-03-06T17:44:17-04:00"
+    "article": {
+      "publisher": "https://www.facebook.com/wallstcheatsheet",
+      "tag": "pregnancy",
+      "section": "Health & Fitness",
+      "published_time": "2018-03-06T17:44:17-04:00"
     },
-    "fb":{
-      "app_id":534706763367100,
-      "admins":826582091
+    "fb": {
+      "app_id": 534706763367100,
+      "admins": 826582091
     },
-    "twitter":{
-      "card":"summary_large_image",
-      "description":"After Kylie Jenner had baby Stormi, fans freaked out about her sudden weight loss. Here's how she lost the weight so quickly.",
-      "title":"Kylie Jenner Has Lost a Startling Amount of Weight Post-Pregnancy, and Here's How",
-      "site":"@cheatsheet",
-      "image":"https://web.archive.org/web/20180312204214im_/https://www.cheatsheet.com/wp-content/uploads/2018/02/Kim-Kylie-Chicago-nursery-640x360.png",
-      "creator":"@cheatsheet"
+    "twitter": {
+      "card": "summary_large_image",
+      "description": "After Kylie Jenner had baby Stormi, fans freaked out about her sudden weight loss. Here's how she lost the weight so quickly.",
+      "title": "Kylie Jenner Has Lost a Startling Amount of Weight Post-Pregnancy, and Here's How",
+      "site": "@cheatsheet",
+      "image": "https://web.archive.org/web/20180312204214im_/https://www.cheatsheet.com/wp-content/uploads/2018/02/Kim-Kylie-Chicago-nursery-640x360.png",
+      "creator": "@cheatsheet"
     },
-    "generator":"WordPress 4.9.4",
-    "sailthru.date":"2018-03-06 17:44:17",
-    "sailthru.tags":"health-fitness,relationships-family,celebrities,Kim Kardashian,Kylie jenner",
-    "sailthru.author":"lauren-w",
-    "sailthru.image.full":"https://www.cheatsheet.com/wp-content/uploads/2018/03/Kylie-Jenner-mirror-selfie-in-her-bathroom.png",
-    "sailthru.image.thumb":"https://www.cheatsheet.com/wp-content/uploads/2018/03/Kylie-Jenner-mirror-selfie-in-her-bathroom-150x100.png",
-    "position":2
+    "generator": "WordPress 4.9.4",
+    "sailthru.date": "2018-03-06 17:44:17",
+    "sailthru.tags": "health-fitness,relationships-family,celebrities,Kim Kardashian,Kylie jenner",
+    "sailthru.author": "lauren-w",
+    "sailthru.image.full": "https://www.cheatsheet.com/wp-content/uploads/2018/03/Kylie-Jenner-mirror-selfie-in-her-bathroom.png",
+    "sailthru.image.thumb": "https://www.cheatsheet.com/wp-content/uploads/2018/03/Kylie-Jenner-mirror-selfie-in-her-bathroom-150x100.png",
+    "position": 2
   },
-  "movies":[ ],
-  "publish_date":1.520372657E9,
-  "source":"https://web.archive.org",
-  "summary":""
+  "movies": [],
+  "publish_date": 1.520372657E9,
+  "source": "https://web.archive.org",
+  "summary": ""
 }
 ```
 
@@ -249,9 +265,9 @@ Lack of credible sources, False or misleading information, Inconsistencies with 
 
 ```json
 {
-  "url":"https://www.cosmopolitan.com/uk/entertainment/a9244918/listen-to-harry-styles-sign-of-the-times/",
-  "text":"YOU GUYS, Harry Styles from One Direction just played his debut solo single 'Sign Of The Times' on BBC Radio 1 during a 2-hour interview with Nick Grimshaw - AND IT'S SO GOOD.\n\nSince One Direction went on hiatus last summer, Harry Styles has been a busy little bee - after landing a role in Christopher Nolan's Dunkirk and going to Jamaica to record his debut solo album.\n\nToday, he released the first single 'Sign Of The Times'. So, you wanna hear it? HERE IT IS:\n\nYeah, we're obsessed.\n\nHarry also spoke to Nick for two hours (TWO HOURS) about everything from what Adele gave him for his birthday to his 'weird' and 'wrong' approach to dating.\n\nOn the topic of his forthcoming album, Harry said he was nervous about the reaction it would receive, but also incredibly proud of it. He commented:\n\n\"It’s a bit weird, I feel like I’ve been hibernating for so long now and you hear it in the safety of the studio and now it’s time to give birth … it’s the song (debut single) I’m most proud of writing.\n\n\"In the least weird way possible, it’s my favourite album to listen to at the moment… I think if you put out something that you don’t stand behind and really love…then if it doesn’t go well then you could regret not doing what you wanted to do. Whereas if nothing happens with it, I love it you know so I think that’s what you should do.\"\n\nBear Grylls // Digital Spy\n\nOn what inspired the album, Harry added:\n\n“I think a lot of people, especially at labels separate it because they work in music that it’s a broader understanding of music than people who are listening… I think we are all fans of music and I think we made it as the fan… I hope we did a good job but I really like the album so I hope people like it.”\n\nYou go, Glen Coco.",
-  "images":[
+  "url": "https://www.cosmopolitan.com/uk/entertainment/a9244918/listen-to-harry-styles-sign-of-the-times/",
+  "text": "YOU GUYS, Harry Styles from One Direction just played his debut solo single 'Sign Of The Times' on BBC Radio 1 during a 2-hour interview with Nick Grimshaw - AND IT'S SO GOOD.\n\nSince One Direction went on hiatus last summer, Harry Styles has been a busy little bee - after landing a role in Christopher Nolan's Dunkirk and going to Jamaica to record his debut solo album.\n\nToday, he released the first single 'Sign Of The Times'. So, you wanna hear it? HERE IT IS:\n\nYeah, we're obsessed.\n\nHarry also spoke to Nick for two hours (TWO HOURS) about everything from what Adele gave him for his birthday to his 'weird' and 'wrong' approach to dating.\n\nOn the topic of his forthcoming album, Harry said he was nervous about the reaction it would receive, but also incredibly proud of it. He commented:\n\n\"It’s a bit weird, I feel like I’ve been hibernating for so long now and you hear it in the safety of the studio and now it’s time to give birth … it’s the song (debut single) I’m most proud of writing.\n\n\"In the least weird way possible, it’s my favourite album to listen to at the moment… I think if you put out something that you don’t stand behind and really love…then if it doesn’t go well then you could regret not doing what you wanted to do. Whereas if nothing happens with it, I love it you know so I think that’s what you should do.\"\n\nBear Grylls // Digital Spy\n\nOn what inspired the album, Harry added:\n\n“I think a lot of people, especially at labels separate it because they work in music that it’s a broader understanding of music than people who are listening… I think we are all fans of music and I think we made it as the fan… I hope we did a good job but I really like the album so I hope people like it.”\n\nYou go, Glen Coco.",
+  "images": [
     "https://www.cosmopolitan.com/_assets/design-tokens/cosmopolitan/static/images/logos/logo.3c052be.svg?primary=%2523ffffff",
     "https://hips.hearstapps.com/hmg-prod/images/screenshot-2023-12-24-at-11-53-29-65881bc3975b7.png?crop=1.00xw:0.891xh;0,0&resize=360:*",
     "https://hips.hearstapps.com/hmg-prod/images/leighton-meester-exmas-6586adc4a5178.jpg?crop=1.00xw:0.670xh;0,0&resize=360:*",
@@ -281,67 +297,67 @@ Lack of credible sources, False or misleading information, Inconsistencies with 
     "https://hips.hearstapps.com/hmg-prod/images/xx-ways-love-actually-would-be-different-in-2023-657b359502a51.jpg?crop=0.506xw:1.00xh;0.248xw,0&resize=360:*",
     "https://hips.hearstapps.com/hmg-prod/images/saltburn-nude-scene-655b39fcd865e.jpg?crop=0.5023255813953489xw:1xh;center,top&resize=360:*"
   ],
-  "top_img":"https://hips.hearstapps.com/hmg-prod/images/legacy-fre-image-placeholder-1655513735.png?crop=1.00xw:0.502xh;0,0.224xh&resize=1200:*",
-  "keywords":[ ],
-  "authors":[ ],
-  "canonical_link":"https://www.cosmopolitan.com/uk/entertainment/a9244918/listen-to-harry-styles-sign-of-the-times/",
-  "title":"Listen to Harry Styles' first solo single 'Sign Of The Times'",
-  "meta_data":{
-    "viewport":"width=device-width, initial-scale=1.0",
-    "X-UA-Compatible":"IE=edge,chrom=1",
-    "msapplication-tap-highlight":"no",
-    "title":"Listen to Harry Styles' first solo single 'Sign Of The Times'",
-    "description":"One Direction's Harry Styles played his debut solo song 'Sign Of The Times' on Nick Grimshaw's BBC Radio 1 show - and it's SO GOOD.",
-    "keywords":"Harry Styles, One Direction, Sign Of The Times, Listen, Single, song, solo song, debut solo song, stream online, harry styles leaked, track, listen",
-    "og":{
-      "type":"article",
-      "site_name":"Cosmopolitan",
-      "title":"Listen to Harry Styles' first solo single 'Sign Of The Times'",
-      "description":"IT'S SO GOOD YOU'RE GONNA LOVE IT",
-      "image":{
-        "identifier":"https://hips.hearstapps.com/hmg-prod/images/legacy-fre-image-placeholder-1655513735.png?crop=1.00xw:0.502xh;0,0.224xh&resize=1200:*",
-        "width":1200,
-        "height":600
+  "top_img": "https://hips.hearstapps.com/hmg-prod/images/legacy-fre-image-placeholder-1655513735.png?crop=1.00xw:0.502xh;0,0.224xh&resize=1200:*",
+  "keywords": [],
+  "authors": [],
+  "canonical_link": "https://www.cosmopolitan.com/uk/entertainment/a9244918/listen-to-harry-styles-sign-of-the-times/",
+  "title": "Listen to Harry Styles' first solo single 'Sign Of The Times'",
+  "meta_data": {
+    "viewport": "width=device-width, initial-scale=1.0",
+    "X-UA-Compatible": "IE=edge,chrom=1",
+    "msapplication-tap-highlight": "no",
+    "title": "Listen to Harry Styles' first solo single 'Sign Of The Times'",
+    "description": "One Direction's Harry Styles played his debut solo song 'Sign Of The Times' on Nick Grimshaw's BBC Radio 1 show - and it's SO GOOD.",
+    "keywords": "Harry Styles, One Direction, Sign Of The Times, Listen, Single, song, solo song, debut solo song, stream online, harry styles leaked, track, listen",
+    "og": {
+      "type": "article",
+      "site_name": "Cosmopolitan",
+      "title": "Listen to Harry Styles' first solo single 'Sign Of The Times'",
+      "description": "IT'S SO GOOD YOU'RE GONNA LOVE IT",
+      "image": {
+        "identifier": "https://hips.hearstapps.com/hmg-prod/images/legacy-fre-image-placeholder-1655513735.png?crop=1.00xw:0.502xh;0,0.224xh&resize=1200:*",
+        "width": 1200,
+        "height": 600
       },
-      "url":"https://www.cosmopolitan.com/uk/entertainment/a9244918/listen-to-harry-styles-sign-of-the-times/"
+      "url": "https://www.cosmopolitan.com/uk/entertainment/a9244918/listen-to-harry-styles-sign-of-the-times/"
     },
-    "theme-color":"#000000",
-    "fb":{
-      "app_id":211620818858710
+    "theme-color": "#000000",
+    "fb": {
+      "app_id": 211620818858710
     },
-    "article":{
-      "publisher":"https://facebook.com/cosmopolitanuk",
-      "section":"Entertainment",
-      "modified_time":"2022-07-29T11:47:49Z",
-      "published_time":"2017-04-07T07:11:00Z"
+    "article": {
+      "publisher": "https://facebook.com/cosmopolitanuk",
+      "section": "Entertainment",
+      "modified_time": "2022-07-29T11:47:49Z",
+      "published_time": "2017-04-07T07:11:00Z"
     },
-    "twitter":{
-      "site":"@CosmopolitanUK",
-      "image":"https://hips.hearstapps.com/hmg-prod/images/legacy-fre-image-placeholder-1655513735.png?crop=1.00xw:0.502xh;0,0.224xh&resize=640:*",
-      "card":"summary_large_image"
+    "twitter": {
+      "site": "@CosmopolitanUK",
+      "image": "https://hips.hearstapps.com/hmg-prod/images/legacy-fre-image-placeholder-1655513735.png?crop=1.00xw:0.502xh;0,0.224xh&resize=640:*",
+      "card": "summary_large_image"
     },
-    "google-site-verification":"9QqScyr6oRc1iBU6yEjb9Ww8aQvv8v-cCm0TKu2J2iw",
-    "robots":"max-image-preview:large,max-snippet:-1,max-video-preview:30",
-    "thumbnail":"https://hips.hearstapps.com/hmg-prod/images/legacy-fre-image-placeholder-1655513735.png?crop=1xw:1xh;center,top&resize=320:*",
-    "sailthru.image.full":"https://hips.hearstapps.com/hmg-prod/images/legacy-fre-image-placeholder-1655513735.png?crop=1.00xw:0.502xh;0,0.224xh&resize=320:*",
-    "sailthru.image.thumb":"https://hips.hearstapps.com/hmg-prod/images/legacy-fre-image-placeholder-1655513735.png?crop=1xw:1xh;center,top",
-    "auto-publish":"timely",
-    "sailthru.excerpt":"YOU GUYS, Harry Styles from One Direction just played his debut solo single 'Sign Of The Times' on BBC Radio 1 during a 2-hour interview with Nick Grimshaw - AND IT'S SO GOOD.\n\nSince One Direction went on hiatus last summer, Harry Styles has been a busy little bee - after",
-    "sailthru.tags":"entertainment,Entertainment",
-    "sailthru.date":"2017-04-07 07:11:00",
-    "sailthru.socialtitle":"Listen to Harry Styles' first solo single 'Sign Of The Times'",
-    "sailthru.contenttype":"standard-article",
-    "m1":".content-hed",
-    "m2":".content-dek p",
-    "next-head-count":46
+    "google-site-verification": "9QqScyr6oRc1iBU6yEjb9Ww8aQvv8v-cCm0TKu2J2iw",
+    "robots": "max-image-preview:large,max-snippet:-1,max-video-preview:30",
+    "thumbnail": "https://hips.hearstapps.com/hmg-prod/images/legacy-fre-image-placeholder-1655513735.png?crop=1xw:1xh;center,top&resize=320:*",
+    "sailthru.image.full": "https://hips.hearstapps.com/hmg-prod/images/legacy-fre-image-placeholder-1655513735.png?crop=1.00xw:0.502xh;0,0.224xh&resize=320:*",
+    "sailthru.image.thumb": "https://hips.hearstapps.com/hmg-prod/images/legacy-fre-image-placeholder-1655513735.png?crop=1xw:1xh;center,top",
+    "auto-publish": "timely",
+    "sailthru.excerpt": "YOU GUYS, Harry Styles from One Direction just played his debut solo single 'Sign Of The Times' on BBC Radio 1 during a 2-hour interview with Nick Grimshaw - AND IT'S SO GOOD.\n\nSince One Direction went on hiatus last summer, Harry Styles has been a busy little bee - after",
+    "sailthru.tags": "entertainment,Entertainment",
+    "sailthru.date": "2017-04-07 07:11:00",
+    "sailthru.socialtitle": "Listen to Harry Styles' first solo single 'Sign Of The Times'",
+    "sailthru.contenttype": "standard-article",
+    "m1": ".content-hed",
+    "m2": ".content-dek p",
+    "next-head-count": 46
   },
-  "movies":[ ],
-  "publish_date":1.49154906E9,
-  "source":"https://www.cosmopolitan.com",
-  "summary":""
+  "movies": [],
+  "publish_date": 1.49154906E9,
+  "source": "https://www.cosmopolitan.com",
+  "summary": ""
 }
 ```
- 
+
 ### style_attack.txt
 
 ```text
@@ -399,7 +415,8 @@ We're so excited to hear more from Harry and can't wait to see what the future h
 
 ### veracity attributions for real news
 
-Note that, the paper **SheepDog** manually set the veracity attributions for real news as `No problems`. Because the real news is not supposed to have any problems.
+Note that, the paper **SheepDog** manually set the veracity attributions for real news as `No problems`. Because the
+real news is not supposed to have any problems.
 
 So you should ignore the 3 veracity attributions files for real news.
 
@@ -418,7 +435,8 @@ Two selections for the publisher name:
 1. National Enquirer
 2. The New York Times
 
-National Enquirer is a tabloid, which is used to camouflage real news. The New York Times is a reliable news source, which is used to camouflage fake news.
+National Enquirer is a tabloid, which is used to camouflage real news. The New York Times is a reliable news source,
+which is used to camouflage fake news.
 
 ## Style Reframing
 
@@ -427,6 +445,7 @@ Rewrite the following article in a / an [specified] tone: [news article]
 ```
 
 Four general style-oriented adjectives for the prompt.
+
 Two for reliable style:
 
 1. objective and professional
@@ -436,6 +455,8 @@ Two for unreliable style:
 
 1. emotionally triggering
 2. sensational
+
+Each time when generating the reliable or unreliable style, we randomly select one of the two adjectives.
 
 ## Veracity Attributions
 
@@ -455,6 +476,7 @@ If you use this code, please cite the following paper:
   year={2018}
 }
 ```
+
 ```
 @misc{wu2023fake,
       title={Fake News in Sheep's Clothing: Robust Fake News Detection Against LLM-Empowered Style Attacks}, 
