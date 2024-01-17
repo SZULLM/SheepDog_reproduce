@@ -280,7 +280,7 @@ Two for unreliable style:
 1. emotionally triggering
 2. sensational
 
-Each time when generating the reliable or unreliable style, we randomly select one of the two adjectives.
+Each time when generating the reliable or unreliable style, we **randomly** select one of the two adjectives.
 
 #### Example
 
