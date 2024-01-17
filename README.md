@@ -12,8 +12,8 @@ from [Google Drive](https://drive.google.com/file/d/1a1gIVwLb-BvzomRHmFzXzGRLNHv
 # Table of Content
 
 1. [Overview](#overview)
-   2. [Dataset Size](#dataset-size)
-   3. [Dataset Source](#dataset-source)
+    1. [Dataset Size](#dataset-size)
+    2. [Dataset Source](#dataset-source)
 2. [Introduction](#introduction)
     1. [`gossipcop` Dataset](#gossipcop-dataset)
         1. [Dataset Structure](#dataset-structure)
