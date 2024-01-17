@@ -81,9 +81,9 @@ the corresponding news source, including url, text, images (if any), etc.
 The **gossipcop_SheepDog_chatglm_8k** contains in total 8k news articles, 4k for each source, which are randomly
 selected from the **gossipcop** dataset.
 
-Besides the **news content.json** file, each article folder contains 6 extra files: **style_attack.txt**, **reliable.txt
-**, **unreliable.txt**, **veracity_attributions.txt**, **veracity_attributions_reliable.txt**, *
-*veracity_attributions_unreliable.txt**.
+Besides the **news content.json** file, each article folder contains 6 extra files: **style_attack.txt**,
+**reliable.txt**, **unreliable.txt**, **veracity_attributions.txt**, **veracity_attributions_reliable.txt**,
+**veracity_attributions_unreliable.txt**.
 
 The news content.json file contains the original news text. Based on this text, using the LLM model, we generate the
 style attack text, reliable text, unreliable text.
@@ -385,11 +385,6 @@ On the topic of his forthcoming album, Harry revealed that he was nervous about 
 "In the least weird way possible, it’s my favourite album to listen to at the moment ... I think if you put out something that you don’t stand behind and really love ... then if it doesn’t go well then you could regret not doing what you wanted to do. Whereas if nothing happens with it, I love it you know so I think that’s what you should do."
 
 So what do you think of Harry's solo debut? Let us know in the comments below! And don't forget to follow us for all the latest Harry Styles news!"```
-
-### reliable.txt
-
-```text
-Mila Kunis, 34, opened up about her relationship with Ashton Kutcher on Marc Maron's WTF podcast. The two co-starred in That '70s Show and had a casual on-and-off relationship. In reality, Kutcher was previously married to actress Demi Moore. After they divorced, Kunis saw Kutcher at a 2012 awards show and thought he was "kinda hot." They began a friends-with-benefits relationship but eventually caught feelings for each other. Kutcher proposed the next day, and they have been together since. The couple has two children and got married in 2015.
 ```
 
 ### reliable.txt
