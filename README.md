@@ -23,8 +23,8 @@ It is a subset of the original dataset, which only contains the news articles.
 
 The **gossipcop_SheepDog_chatglm_8k** dataset is an extended version of the subset of the **gossipcop** dataset,
 following the steps from the
-paper [Fake News in Sheep's Clothing: Robust Fake News Detection Against LLM-Empowered Style Attacks](https://arxiv.org/abs/2310.10830) (
-SheepDog).
+paper [Fake News in Sheep's Clothing: Robust Fake News Detection Against LLM-Empowered Style Attacks](https://arxiv.org/abs/2310.10830) 
+(SheepDog).
 
 **SheepDog** presents the style-related vulnerability of state-of-the-art text-based fake news detectors to
 LLM-empowered style attacks.
