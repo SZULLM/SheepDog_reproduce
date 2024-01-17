@@ -1,109 +1,75 @@
 # SheepDog_reproduce
 
-This repository contains the **gossipcop** dataset and its extended dataset **gossipcop_SheepDog_chatglm_8k**.
+This repository contains 2 datasets：
+
+1. `gossipcop`: contains news contents with labels (real/fake), collected from a fact-checking website Gossipcop.
+2. `gossipcop_SheepDog_chatglm_8k`: an extended version of the `gossipcop` dataset, contains LLM-generated information
+   about the news contents.
 
 You can download the datasets
-from [Google Drive](https://drive.google.com/file/d/1a1gIVwLb-BvzomRHmFzXzGRLNHvbrEHY/view?usp=drive_link). Then put
-them into data folder and unzip them.
+from [Google Drive](https://drive.google.com/file/d/1a1gIVwLb-BvzomRHmFzXzGRLNHvbrEHY/view?usp=drive_link).
 
 # Table of Content
 
 1. [Overview](#overview)
-2. [Dataset Structure](#dataset-structure)
-3. [Example of the Files](#example-of-the-files)
-    1. [fake news](#fake-news)
-    2. [real news](#real-news)
-4. [LLM-Empowered News Reframing](#llm-empowered-news-reframing)
-5. [Reference](#reference)
+    2. [Dataset Size](#dataset-size)
+    3. [Dataset Source](#dataset-source)
+2. [Introduction](#introduction)
+    1. [`gossipcop` Dataset](#gossipcop-dataset)
+        1. [Dataset Structure](#dataset-structure)
+        2. [Example](#example)
+    2. [`gossipcop_SheepDog_chatglm_8k` Dataset](#gossipcop_sheepdog_chatglm_8k-dataset)
+        1. [Dataset Structure](#dataset-structure-1)
+        2. [Style Attack](#style-attack)
+        3. [News Reframing](#news-reframing)
+        4. [Veracity Attribution](#veracity-attribution)
+3. [Dataset Example inside this Repository](#dataset-example-inside-this-repository)
+4. [Reference](#reference)
 
 # Overview
 
-The **gossipcop** dataset is from [FakeNewsNet](https://github.com/KaiDMML/FakeNewsNet?tab=readme-ov-files).
-It is a subset of the original dataset, which only contains the news articles.
+## Dataset Size
 
-The **gossipcop_SheepDog_chatglm_8k** dataset is an extended version of the subset of the **gossipcop** dataset,
-following the steps from the
-paper [Fake News in Sheep's Clothing: Robust Fake News Detection Against LLM-Empowered Style Attacks](https://arxiv.org/abs/2310.10830) 
-(SheepDog).
+|            Dataset            | # of news articles | # of fake news articles | # of real news articles |
+|:-----------------------------:|:------------------:|:-----------------------:|:-----------------------:|
+|           gossipcop           |       19708        |          4717           |          14991          |
+| gossipcop_SheepDog_chatglm_8k |        8000        |          4000           |          4000           |
 
-**SheepDog** presents the style-related vulnerability of state-of-the-art text-based fake news detectors to
-LLM-empowered style attacks.
-It also proposes a style-agnostic fake news detector, which is robust against LLM-empowered style attacks.
+## Dataset Source
 
-# Dataset Structure
+- `gossipcop`:  Paper [FakeNewsNet](https://arxiv.org/abs/1809.01286);
+  Github [link](https://github.com/KaiDMML/FakeNewsNet)
+- `gossipcop_SheepDog_chatglm_8k`: Paper [SheepDog](https://arxiv.org/abs/2310.10830);
 
-```
-.
-├── LICENSE
-├── README.md
-├── data
-└── data_example
-    ├── gossipcop_SheepDog_chatglm_8k_example
-    │   ├── fake
-    │   │   └── gossipcop-13736481
-    │   │       ├── news content.json
-    │   │       ├── reliable.txt
-    │   │       ├── style_attack.txt
-    │   │       ├── unreliable.txt
-    │   │       ├── veracity_attributions.txt
-    │   │       ├── veracity_attributions_reliable.txt
-    │   │       └── veracity_attributions_unreliable.txt
-    │   └── real
-    │       └── gossipcop-841804
-    │           ├── news content.json
-    │           ├── reliable.txt
-    │           ├── style_attack.txt
-    │           ├── unreliable.txt
-    │           ├── veracity_attributions.txt
-    │           ├── veracity_attributions_reliable.txt
-    │           └── veracity_attributions_unreliable.txt
-    └── gossipcop_example
-        ├── fake
-        │   └── gossipcop-13736481
-        │       └── news content.json
-        └── real
-            └── gossipcop-841804
-                └── news content.json
+SheepDog does not release the code and dataset. We use the method proposed in the paper to generate the dataset.
 
-13 directories, 18 files
+# Introduction
 
+## `gossipcop` Dataset
+
+### Dataset Structure
+
+```text
+├── gossipcop
+│   ├── fake
+│   │   ├── gossipcop-13736481
+│   │	│	└── news content.json
+│   │	└── ....			
+│   └── real
+│       ├── gossipcop-841804
+│       │      	└── news content.json
+│	└── ....
 ```
 
-The **gossipcop** dataset contains 2 folders (source): fake and real. It contains 4717 fake news articles and 14991 real
-news articles.
+`fake` folder contains all fake news. `real` folder contains all real news.
 
-Each source folder contains multiple folders (news articles). The folder name is the news article id, such
-as `gossipcop-13736481`.
+Each news has a folder named by the news id, such as `gossipcop-13736481`.
 
-Each article folder contains a file named **news content.json**. It contains the information of the news articles from
-the corresponding news source, including url, text, images (if any), etc.
+Each news folder contains a file `news content.json`, contains the meta information, such as url, text, images, etc.
 
-The **gossipcop_SheepDog_chatglm_8k** contains in total 8k news articles, 4k for each source, which are randomly
-selected from the **gossipcop** dataset.
+### Example
 
-Besides the **news content.json** file, each article folder contains 6 extra files: **style_attack.txt**,
-**reliable.txt**, **unreliable.txt**, **veracity_attributions.txt**, **veracity_attributions_reliable.txt**,
-**veracity_attributions_unreliable.txt**.
-
-The news content.json file contains the original news text. Based on this text, using the LLM model, we generate the
-style attack text, reliable text, unreliable text.
-
-We further use LLM model to generate the veracity attributions for the news articles.
-
-The veracity_attributions.txt file contains the veracity attributions for the original news articles. The
-veracity_attributions_reliable.txt and veracity_attributions_unreliable.txt files contain the veracity attributions for
-the reliable and unreliable text, respectively.
-
-We utilize the [ChatGLM3](https://github.com/THUDM/ChatGLM3) model to reframe the news articles and predict the veracity
-attributions. More details can be found in below section [LLM-Empowered News Reframing](#llm-empowered-news-reframing).
-
-# Example of the Files
-
-## fake news
-
-### news contents.json
-
-`gossipcop_example/fake/gossipcop-13736481/news content.json`
+`news content.json` from `fake/gossipcop-13736481`
 
 ```json
 {
@@ -196,7 +162,69 @@ attributions. More details can be found in below section [LLM-Empowered News Ref
 }
 ```
 
-### style_attack.txt
+## `gossipcop_SheepDog_chatglm_8k` Dataset
+
+### Dataset Structure
+
+```text
+├── gossipcop_SheepDog_chatglm_8k
+│   ├── fake
+│   │   ├── gossipcop-13736481
+│   │	│	├── news content.json
+│   │	│	├── reliable.txt
+│   │	│	├── style_attack.txt
+│   │	│	├── unreliable.txt
+│   │	│	├── veracity_attributions.txt
+│   │	│	├── veracity_attributions_reliable.txt
+│   │	│	└── veracity_attributions_unreliable.txt
+│   │	└── ....
+│   └── real
+│       ├── gossipcop-841804
+│       │      	├── news content.json
+│       │      	├── reliable.txt
+│       │      	├── style_attack.txt
+│       │      	├── unreliable.txt
+│       │      	├── veracity_attributions.txt
+│       │      	├── veracity_attributions_reliable.txt
+│       │      	└── veracity_attributions_unreliable.txt
+│	└── ....
+```        
+
+`gossipcop_SheepDog_chatglm_8k` Dataset has the same structure as the `gossipcop` dataset.
+
+In addition, each news folder contains 6 extra files:
+
+1. `style_attack.txt`
+2. `reliable.txt`
+3. `unreliable.txt`
+4. `veracity_attributions.txt`
+5. `veracity_attributions_reliable.txt`
+6. `veracity_attributions_unreliable.txt`
+
+`style_attack.txt` is used for illustrating the **style attack** to fake news detectors.
+
+The rest 5 files are used for training a model that is robust against the style attack. SheepDog proposes two methods
+to generate the 5 files:
+
+1. **News Reframing**
+2. **Veracity Attribution**
+
+### Style Attack
+
+Idea: rewrite the news in different styles:
+
+1. For `real` news, rewrite in `National Enquirer` style.
+2. For `fake` news, rewrite in `The New York Times` style.
+
+#### Prompt
+
+```
+Rewrite the following article using the style of [publisher name]: [news article]
+```
+
+#### Example
+
+`style_attack.txt` from `fake/gossipcop-13736481
 
 ```text
 Kylie Jenner has finally revealed the arrival of her baby, Stormi, to the world after keeping her pregnancy under wraps for nine months. While many expected the reality star to quickly bounce back into shape with a healthy diet and exercise regimen, recent photos suggest that she has lost a significant amount of weight, leaving fans to wonder if it's healthy.
@@ -212,7 +240,51 @@ There are also rumors that Kylie is sticking to an extremely calorie-restricted 
 Finally, some sources suggest that Kylie's weight loss may be due to good genetics and breastfeeding, rather than extreme dieting. While it is possible that Kylie is not going to any extremes after all, it is important for new mothers to focus on good nutrition, sleep, and physical activity to keep energy levels up and maintain a healthy weight.
 ```
 
-### reliable.txt
+Two selections for the publisher name:
+
+1. National Enquirer
+2. The New York Times
+
+`National Enquirer` is a tabloid, which is an unreliable news source, while `The New York Times` is a reliable news
+source
+
+### News Reframing
+
+Idea: rewrite the news in different styles, and then feed the model with the original version, the reliable version and
+the unreliable version.
+Force the model to focus on the content of the news, instead of the style.
+
+When preprocessing the dataset:
+
+original text → LLM → reliable text, unreliable text
+
+When training the model:
+
+original text, reliable text, unreliable text → model
+
+#### Prompt
+
+```
+Rewrite the following article in a / an [specified] tone: [news article]
+```
+
+Four general style-oriented adjectives for the prompt.
+
+Two for reliable style:
+
+1. objective and professional
+2. neutral
+
+Two for unreliable style:
+
+1. emotionally triggering
+2. sensational
+
+Each time when generating the reliable or unreliable style, we randomly select one of the two adjectives.
+
+#### Example
+
+`reliable.txt` from `fake/gossipcop-13736481`
 
 ```text
 Kylie Jenner recently revealed her baby, Stormi, to the world after keeping her pregnancy a secret for nine months. As with many celebrities, fans expect Kylie to quickly return to her pre-pregnancy weight through a healthy diet and exercise regimen. However, recent photos suggest that she has lost a significant amount of weight, raising concerns about her health.
@@ -226,7 +298,7 @@ It is also possible that Kylie is simply losing weight due to good genetics and 
 Overall, it is important to approach weight loss after pregnancy in a healthy and sustainable way, rather than relying on extreme diets or quick fixes.
 ```
 
-### unreliable.txt
+`unreliable.txt` from `fake/gossipcop-13736481`
 
 ```text
 Kylie Jenner has revealed the secret to her dramatic weight loss after giving birth to Stormi, sparking concerns about her health and inspiring envy in her fans.
@@ -248,227 +320,99 @@ Experts warn that new mothers should not aim to lose weight quickly after giving
 Overall, Kylie's dramatic weight loss has left her fans both inspired and concerned about her health. Only time will tell if her weight loss is sustainable and if she will be able to maintain it in the long run.
 ```
 
-### veracity_attributions.txt
+### Veracity Attribution
 
-```text
-False or misleading information
-```
+Ideas: use LLM's knowledge to predict the potencial fake reasons of the news, called veracity attributions.
 
-### veracity_attributions_reliable.txt
+4 fake reasons:
 
-```text
-Lack of credible sources, False or misleading information, Inconsistencies with reputable sources
-```
+1. Lack of credible sources
+2. False or misleading information
+3. Biased opinion
+4. Inconsistencies with reputable sources
 
-### veracity_attributions_unreliable.txt
+The veracity attributions ard used as pseudo labels for the news.
 
-```text
-Lack of credible sources, False or misleading information, Inconsistencies with reputable sources
-```
+We predict the veracity attributions for the original news, the reliable text and the unreliable text.
 
-## real news
+- original text → `veracity_attributions.txt`
+- `reliable.txt` → `veracity_attributions_reliable.txt`
+- `unreliable.txt` → `veracity_attributions_unreliable.txt
 
-### news contents.json
-
-```json
-{
-  "url": "https://www.cosmopolitan.com/uk/entertainment/a9244918/listen-to-harry-styles-sign-of-the-times/",
-  "text": "YOU GUYS, Harry Styles from One Direction just played his debut solo single 'Sign Of The Times' on BBC Radio 1 during a 2-hour interview with Nick Grimshaw - AND IT'S SO GOOD.\n\nSince One Direction went on hiatus last summer, Harry Styles has been a busy little bee - after landing a role in Christopher Nolan's Dunkirk and going to Jamaica to record his debut solo album.\n\nToday, he released the first single 'Sign Of The Times'. So, you wanna hear it? HERE IT IS:\n\nYeah, we're obsessed.\n\nHarry also spoke to Nick for two hours (TWO HOURS) about everything from what Adele gave him for his birthday to his 'weird' and 'wrong' approach to dating.\n\nOn the topic of his forthcoming album, Harry said he was nervous about the reaction it would receive, but also incredibly proud of it. He commented:\n\n\"It’s a bit weird, I feel like I’ve been hibernating for so long now and you hear it in the safety of the studio and now it’s time to give birth … it’s the song (debut single) I’m most proud of writing.\n\n\"In the least weird way possible, it’s my favourite album to listen to at the moment… I think if you put out something that you don’t stand behind and really love…then if it doesn’t go well then you could regret not doing what you wanted to do. Whereas if nothing happens with it, I love it you know so I think that’s what you should do.\"\n\nBear Grylls // Digital Spy\n\nOn what inspired the album, Harry added:\n\n“I think a lot of people, especially at labels separate it because they work in music that it’s a broader understanding of music than people who are listening… I think we are all fans of music and I think we made it as the fan… I hope we did a good job but I really like the album so I hope people like it.”\n\nYou go, Glen Coco.",
-  "images": [
-    "https://www.cosmopolitan.com/_assets/design-tokens/cosmopolitan/static/images/logos/logo.3c052be.svg?primary=%2523ffffff",
-    "https://hips.hearstapps.com/hmg-prod/images/screenshot-2023-12-24-at-11-53-29-65881bc3975b7.png?crop=1.00xw:0.891xh;0,0&resize=360:*",
-    "https://hips.hearstapps.com/hmg-prod/images/leighton-meester-exmas-6586adc4a5178.jpg?crop=1.00xw:0.670xh;0,0&resize=360:*",
-    "https://hips.hearstapps.com/hmg-prod/images/gladiators-658c0570e6039.jpeg?crop=0.710xw:1.00xh;0.146xw,0&resize=360:*",
-    "https://www.cosmopolitan.com/_assets/design-tokens/fre/static/icons/search.f1c199c.svg",
-    "https://hips.hearstapps.com/hmg-prod/images/travis-kourtney-love-note-1640255410.png?crop=0.801xw:0.641xh;0.0737xw,0.0167xh&resize=360:*",
-    "https://www.cosmopolitan.com/_assets/design-tokens/en-gb/static/images/logos/network-logo.eae65ae.svg?primary=%2523ffffff",
-    "https://www.cosmopolitan.com/_assets/design-tokens/fre/static/icons/play.db7c035.svg?primary=%2523ffffff",
-    "https://hips.hearstapps.com/hmg-prod/images/bridgerton-302-unit-02420r-658bfcb46fee3.jpeg?crop=0.668xw:1.00xh;0.201xw,0&resize=360:*",
-    "https://www.cosmopolitan.com/_assets/design-tokens/fre/static/icons/social/instagram.f282b14.svg?primary=%2523DA8EEA&id=social-button-icon",
-    "https://hips.hearstapps.com/hmg-prod/images/legacy-fre-image-placeholder-1655513735.png?crop=1.00xw:0.502xh;0,0.224xh&resize=1200:*",
-    "https://www.cosmopolitan.com/_assets/design-tokens/fre/static/icons/social/x.3361b6d.svg?primary=%2523DA8EEA&id=social-button-icon",
-    "https://hips.hearstapps.com/vidthumb/images/stt-amber-gill-yt-1641312470.jpg?crop=1xw:1xh;center,top&resize=1200:*",
-    "https://hips.hearstapps.com/rover/profile_photos/0705f70f-1709-4777-afb2-62e0e0441313.jpg?fill=1:1&resize=160:*",
-    "https://hips.hearstapps.com/hmg-prod/images/mean-girls-1612442204.jpeg?crop=0.665xw:1.00xh;0.210xw,0&resize=360:*",
-    "https://hips.hearstapps.com/hmg-prod/images/kim-kardashian-bikini-640992816b1b9.png?crop=1.00xw:0.841xh;0,0.00134xh&resize=360:*",
-    "https://www.cosmopolitan.com/_assets/design-tokens/fre/static/icons/social/pinterest.e8cf655.svg?primary=%2523DA8EEA&id=social-button-icon",
-    "https://hips.hearstapps.com/hmg-prod/images/legacy-fre-image-placeholder-1655513735.png?crop=1.00xw:0.564xh;0,0.203xh&resize=768:*",
-    "https://www.cosmopolitan.com/_assets/design-tokens/fre/static/icons/social/youtube.ce3e1ae.svg?primary=%2523DA8EEA&id=social-button-icon",
-    "https://hips.hearstapps.com/hmg-prod/images/kylie-and-timothe-e-654376f65a72c.jpg?crop=0.505xw:1.00xh;0.176xw,0&resize=360:*",
-    "https://www.cosmopolitan.com/_assets/design-tokens/fre/static/icons/social/facebook.a5a3a69.svg?primary=%2523DA8EEA&id=social-button-icon",
-    "https://hips.hearstapps.com/hmg-prod/images/hen-party-houses-77-1595424238.jpg?crop=0.503xw:1.00xh;0.311xw,0&resize=360:*",
-    "https://www.cosmopolitan.com/_assets/design-tokens/fre/static/icons/social/pinterest.e8cf655.svg?primary=%2523ffffff",
-    "https://www.cosmopolitan.com/_assets/design-tokens/fre/static/images/logos/ipso-regulated.9922b5a.svg?primary=white",
-    "https://hips.hearstapps.com/hmg-prod/images/legacy-fre-image-placeholder-1655513735.png?resize=980:*",
-    "https://hips.hearstapps.com/hmg-prod/images/dominicwest-65883c634bf99.jpg?crop=1.00xw:0.668xh;0,0&resize=360:*",
-    "https://hips.hearstapps.com/hmg-prod/images/xx-ways-love-actually-would-be-different-in-2023-657b359502a51.jpg?crop=0.506xw:1.00xh;0.248xw,0&resize=360:*",
-    "https://hips.hearstapps.com/hmg-prod/images/saltburn-nude-scene-655b39fcd865e.jpg?crop=0.5023255813953489xw:1xh;center,top&resize=360:*"
-  ],
-  "top_img": "https://hips.hearstapps.com/hmg-prod/images/legacy-fre-image-placeholder-1655513735.png?crop=1.00xw:0.502xh;0,0.224xh&resize=1200:*",
-  "keywords": [],
-  "authors": [],
-  "canonical_link": "https://www.cosmopolitan.com/uk/entertainment/a9244918/listen-to-harry-styles-sign-of-the-times/",
-  "title": "Listen to Harry Styles' first solo single 'Sign Of The Times'",
-  "meta_data": {
-    "viewport": "width=device-width, initial-scale=1.0",
-    "X-UA-Compatible": "IE=edge,chrom=1",
-    "msapplication-tap-highlight": "no",
-    "title": "Listen to Harry Styles' first solo single 'Sign Of The Times'",
-    "description": "One Direction's Harry Styles played his debut solo song 'Sign Of The Times' on Nick Grimshaw's BBC Radio 1 show - and it's SO GOOD.",
-    "keywords": "Harry Styles, One Direction, Sign Of The Times, Listen, Single, song, solo song, debut solo song, stream online, harry styles leaked, track, listen",
-    "og": {
-      "type": "article",
-      "site_name": "Cosmopolitan",
-      "title": "Listen to Harry Styles' first solo single 'Sign Of The Times'",
-      "description": "IT'S SO GOOD YOU'RE GONNA LOVE IT",
-      "image": {
-        "identifier": "https://hips.hearstapps.com/hmg-prod/images/legacy-fre-image-placeholder-1655513735.png?crop=1.00xw:0.502xh;0,0.224xh&resize=1200:*",
-        "width": 1200,
-        "height": 600
-      },
-      "url": "https://www.cosmopolitan.com/uk/entertainment/a9244918/listen-to-harry-styles-sign-of-the-times/"
-    },
-    "theme-color": "#000000",
-    "fb": {
-      "app_id": 211620818858710
-    },
-    "article": {
-      "publisher": "https://facebook.com/cosmopolitanuk",
-      "section": "Entertainment",
-      "modified_time": "2022-07-29T11:47:49Z",
-      "published_time": "2017-04-07T07:11:00Z"
-    },
-    "twitter": {
-      "site": "@CosmopolitanUK",
-      "image": "https://hips.hearstapps.com/hmg-prod/images/legacy-fre-image-placeholder-1655513735.png?crop=1.00xw:0.502xh;0,0.224xh&resize=640:*",
-      "card": "summary_large_image"
-    },
-    "google-site-verification": "9QqScyr6oRc1iBU6yEjb9Ww8aQvv8v-cCm0TKu2J2iw",
-    "robots": "max-image-preview:large,max-snippet:-1,max-video-preview:30",
-    "thumbnail": "https://hips.hearstapps.com/hmg-prod/images/legacy-fre-image-placeholder-1655513735.png?crop=1xw:1xh;center,top&resize=320:*",
-    "sailthru.image.full": "https://hips.hearstapps.com/hmg-prod/images/legacy-fre-image-placeholder-1655513735.png?crop=1.00xw:0.502xh;0,0.224xh&resize=320:*",
-    "sailthru.image.thumb": "https://hips.hearstapps.com/hmg-prod/images/legacy-fre-image-placeholder-1655513735.png?crop=1xw:1xh;center,top",
-    "auto-publish": "timely",
-    "sailthru.excerpt": "YOU GUYS, Harry Styles from One Direction just played his debut solo single 'Sign Of The Times' on BBC Radio 1 during a 2-hour interview with Nick Grimshaw - AND IT'S SO GOOD.\n\nSince One Direction went on hiatus last summer, Harry Styles has been a busy little bee - after",
-    "sailthru.tags": "entertainment,Entertainment",
-    "sailthru.date": "2017-04-07 07:11:00",
-    "sailthru.socialtitle": "Listen to Harry Styles' first solo single 'Sign Of The Times'",
-    "sailthru.contenttype": "standard-article",
-    "m1": ".content-hed",
-    "m2": ".content-dek p",
-    "next-head-count": 46
-  },
-  "movies": [],
-  "publish_date": 1.49154906E9,
-  "source": "https://www.cosmopolitan.com",
-  "summary": ""
-}
-```
-
-### style_attack.txt
-
-```text
-"BREAKING NEWS: Harry Styles Makes Solo Debut with Blistering New Single 'Sign Of The Times!'
-
-After months of teasing, One Direction heartthrob Harry Styles has finally unleashed his highly anticipated debut solo single 'Sign Of The Times'. And let me tell you, it's everything we've been waiting for!
-
-Since the band went on hiatus last summer, Harry has been busy filming Christopher Nolan's Dunkirk and recording his solo album in Jamaica. And today, he made his solo debut with an electrifying performance of 'Sign Of The Times' on BBC Radio 1 during a two-hour interview with Nick Grimshaw.
-
-We're obsessed with the song! It's got a beat that's out of this world, and Harry's vocals are as smooth as butter. We can't get enough of it!
-
-But that's not all - Harry also spoke to Nick for two whole hours about everything from what Adele gave him for his birthday to his 'weird' and 'wrong' approach to dating.
-
-On the topic of his forthcoming album, Harry revealed that he was nervous about the reaction it would receive, but also incredibly proud of it. He said:
-
-"It’s a bit weird, I feel like I’ve been hibernating for so long now and you hear it in the safety of the studio and now it’s time to give birth ... it’s the song (debut single) I’m most proud of writing.
-
-"In the least weird way possible, it’s my favourite album to listen to at the moment ... I think if you put out something that you don’t stand behind and really love ... then if it doesn’t go well then you could regret not doing what you wanted to do. Whereas if nothing happens with it, I love it you know so I think that’s what you should do."
-
-So what do you think of Harry's solo debut? Let us know in the comments below! And don't forget to follow us for all the latest Harry Styles news!"```
-```
-
-### reliable.txt
-
-```text
-Harry Styles, previously a member of the boy band One Direction, has released his debut solo single, "Sign Of The Times." The song premiered during a two-hour interview with Nick Grimshaw on BBC Radio 1 and has been met with widespread appreciation.
-
-Since the hiatus of One Direction last summer, Styles has been actively engaged in his solo career. He landed a role in Christopher Nolan's war film Dunkirk and traveled to Jamaica to record his debut album.
-
-During his interview with Grimshaw, Styles discussed a range of topics, including what Adele gave him for his birthday and his unconventional approach to dating. He also spoke about his upcoming album, expressing nervousness about the reception it might receive but also pride in the work.
-
-When discussing the album's inspiration, Styles noted that he and his collaborators aimed to create music that would appeal to a broad audience, rather than just music industry insiders. He hopes that fans will enjoy the album and that it will be well-received.
-
-Overall, Styles has been a busy bee since One Direction's hiatus, and his debut single and upcoming album show that he is poised for continued success in the music industry.
-```
-
-### unreliable.txt
-
-```text
-Oh my goodness, have you heard the new solo single from Harry Styles? He just played it on BBC Radio 1 during a 2-hour interview with Nick Grimshaw and it's absolutely amazing. Since One Direction went on hiatus last summer, Harry has been working tirelessly on his debut album and it seems like it's all been worth it.
-
-The first single, 'Sign Of The Times', is perfection. It's been on repeat all day and we can't get enough of it. Harry also spoke to Nick for two hours about everything from what Adele gave him for his birthday to his 'weird' and 'wrong' approach to dating.
-
-On the topic of his forthcoming album, Harry said he was nervous about the reaction it would receive, but also incredibly proud of it. He explained that he's been hibernating for so long now and it's finally time to give birth, and that he's most proud of the song he's releasing as the debut single.
-
-Harry also said that he hopes people will love the album as much as he does, and that if nothing happens with it, he loves it anyway. That's the kind of confidence we love to see in a artist.
-
-We're so excited to hear more from Harry and can't wait to see what the future holds for him. He truly is a star and we are all rooting for him.```
-```
-
-### veracity attributions for real news
-
-Note that, the paper **SheepDog** manually set the veracity attributions for real news as `No problems`. Because the
-real news is not supposed to have any problems.
-
-So you should ignore the 3 veracity attributions files for real news.
-
-# LLM-Empowered News Reframing
-
-Contains 3 types of news reframing tasks: style attack, style reframing, and veracity attribution.
-
-## Style Attack
-
-```
-Rewrite the following article using the style of [publisher name]: [news article]
-```
-
-Two selections for the publisher name:
-
-1. National Enquirer
-2. The New York Times
-
-National Enquirer is a tabloid, which is used to camouflage real news. The New York Times is a reliable news source,
-which is used to camouflage fake news.
-
-## Style Reframing
-
-```
-Rewrite the following article in a / an [specified] tone: [news article]
-```
-
-Four general style-oriented adjectives for the prompt.
-
-Two for reliable style:
-
-1. objective and professional
-2. neutral
-
-Two for unreliable style:
-
-1. emotionally triggering
-2. sensational
-
-Each time when generating the reliable or unreliable style, we randomly select one of the two adjectives.
-
-## Veracity Attributions
+#### Prompt
 
 ```
 Article: [news article] Question: Which of the following problems does this article have? Lack of credible sources, False or misleading information, Biased opinion, Inconsistencies with reputable sources. If multiple options apply, provide a commaseparated list ordered from most to least related. Answer "No problems" if none of the options apply.
 ```
 
+#### Example
+
+`veracity_attributions.txt` from `fake/gossipcop-13736481`
+
+```text
+False or misleading information
+```
+
+`veracity_attributions_reliable.txt` from `fake/gossipcop-13736481`
+
+```text
+Lack of credible sources, False or misleading information, Inconsistencies with reputable sources
+```
+
+`veracity_attributions_unreliable.txt` from `fake/gossipcop-13736481`
+
+```text
+Lack of credible sources, False or misleading information, Inconsistencies with reputable sources
+```
+
+# Dataset Example inside this Repository
+
+We also provide an example of the `gossipcop` dataset and the `gossipcop_SheepDog_chatglm_8k` dataset in the
+`data_example` folder of this repository. You can preview the files in the folder without downloading the datasets.
+
+**Structure of this repository**:
+
+```
+.
+├── LICENSE
+├── README.md
+├── data
+└── data_example
+    ├── gossipcop_SheepDog_chatglm_8k_example
+    │   ├── fake
+    │   │   └── gossipcop-13736481
+    │   │       ├── news content.json
+    │   │       ├── reliable.txt
+    │   │       ├── style_attack.txt
+    │   │       ├── unreliable.txt
+    │   │       ├── veracity_attributions.txt
+    │   │       ├── veracity_attributions_reliable.txt
+    │   │       └── veracity_attributions_unreliable.txt
+    │   └── real
+    │       └── gossipcop-841804
+    │           ├── news content.json
+    │           ├── reliable.txt
+    │           ├── style_attack.txt
+    │           ├── unreliable.txt
+    │           ├── veracity_attributions.txt
+    │           ├── veracity_attributions_reliable.txt
+    │           └── veracity_attributions_unreliable.txt
+    └── gossipcop_example
+        ├── fake
+        │   └── gossipcop-13736481
+        │       └── news content.json
+        └── real
+            └── gossipcop-841804
+                └── news content.json
+
+13 directories, 18 files
+```
+
 # Reference
 
 If you use this code, please cite the following paper:
+
+FakeNewsNet: proposed the `gossipcop` dataset.
 
 ```
 @article{shu2018fakenewsnet,
@@ -478,6 +422,9 @@ If you use this code, please cite the following paper:
   year={2018}
 }
 ```
+
+SheepDog: proposed a method to overcome the style attack to fake news detectors.
+Following the method, we produce the `gossipcop_SheepDog_chatglm_8k` dataset.
 
 ```
 @misc{wu2023fake,
@@ -489,3 +436,4 @@ If you use this code, please cite the following paper:
       primaryClass={cs.CL}
 }
 ```
+
