@@ -7,7 +7,7 @@ This repository contains 2 datasets：
    about the news contents.
 
 You can download the datasets
-from [Google Drive](https://drive.google.com/file/d/1a1gIVwLb-BvzomRHmFzXzGRLNHvbrEHY/view?usp=drive_link).
+from [Google Drive](https://drive.google.com/drive/folders/1tq9VP4aLoguwX0T4nwYJ2Q43WCMWU49G?usp=drive_link).
 
 # Table of Content
 
